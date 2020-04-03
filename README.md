@@ -14,9 +14,9 @@ Hint: Look for Pareto frontier optimization and diversifying dominant solutions.
 
 Fitness Evaluation
 Fitness involves 3 measure:
-●	Minimal Free space
-●	Maximum total values in the truck
-●	Maximum number of boxes
+●	Minimal Free space <br/>
+●	Maximum total values in the truck <br/>
+●	Maximum number of boxes <br/>
 
 A sample program is provided (fitnessEval.py) which calculates the free space, total values and number of boxes. Use/modify it if needed.
 
