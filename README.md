@@ -1,11 +1,11 @@
 # TruckAndPackages
-Problem Description <h2/>
+## Problem Description 
 Loading a truck with packages with weights is a variation of the bin packing problem. Computationally, it is considered to be a combinatorial NP-hard problem. It could be tackled by a Genetic algorithm.
 
-Objective <h2/>
+## Objective 
 For a truck and packages of given dimension and value (only for the packages), design GA to fill the truck with packages. The primary aim of the project is to fill the truck with packages, by minimizing the free space.
 
-Bonus <h2/>
+## Bonus 
 
 Sometimes, not all the boxes will fit in the truck. The packages can also have some weight/value. Hence, modify the algorithm to fill the truck, by minimizing its free space but maximizing the total number and value of the packages. 
 
