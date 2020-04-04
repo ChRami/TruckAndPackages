@@ -7,7 +7,7 @@ PuzzleIndividual::PuzzleIndividual() {
 
 }
 
-PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage) {
+PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameLength, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage) {
 	this->puzzle = pieces;
 	this->frameWidth = frameWidth;
 	this->frameHeight = frameHeight;
@@ -156,8 +156,8 @@ double PuzzleIndividual::fitnessEval() {
 	}
 
 	double occupiedPercent = ((double)occupiedSpace / (double)(frameWidth*frameHeight*frameLength)) * 100.0;
-	double valuePercent = (double)availableValue / (double) maxValue;
-	double boxPercent = (double)availableBoxes / (double) puzzle.size();
+	double valuePercent = ((double)availableValue / (double) maxValue) * 100.0;
+	double boxPercent = ((double)availableBoxes / (double) puzzle.size()) * 100.0;
 
 
 	return occupiedPercent * fillFitnessPercentage + valuePercent * valueFitnessPercentage + boxPercent * boxInFitnessPercentage;

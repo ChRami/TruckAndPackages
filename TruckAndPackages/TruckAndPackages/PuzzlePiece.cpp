@@ -43,17 +43,17 @@ int PuzzlePiece::getValue() const {
 
 void PuzzlePiece::rotatePiece(int choice) {
 	switch (choice) {
-	case 0: //X-turn
+	case 0: // 0 = X-turn
 		int temp = length;
 		this->length = width;
 		this->width = temp;
 		break;
-	case 1: //Y-turn
+	case 1: // 1 = Y-turn
 		int temp = width;
 		this->width = height;
 		this->height = temp;
 		break;
-	case 2: //Z-turn
+	case 2: // 2 = Z-turn
 		int temp = height;
 		this->height = length;
 		this->length = temp;
