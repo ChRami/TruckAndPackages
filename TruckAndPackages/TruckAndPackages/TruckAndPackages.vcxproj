@@ -116,6 +116,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PuzzleIndividual.cpp" />
+    <ClCompile Include="PuzzlePiece.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PuzzleIndividual.h" />
+    <ClInclude Include="PuzzlePiece.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
