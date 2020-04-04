@@ -52,6 +52,7 @@ double PuzzleIndividual::fitnessEval() {
 	int minZ = 1000;
 
 	int availableValue = 0;
+	int availableBoxes = puzzle.size();
 
 	for (int p = 0; p < puzzle.size(); p++) { //Trimming the summing tripple for loop
 
@@ -113,10 +114,34 @@ double PuzzleIndividual::fitnessEval() {
 
 	}
 
-
+	int maxValue = availableValue;
 
 	for (int p = 0; p < puzzle.size(); p++) {
 
+		bool isInside = true;
+
+		for (int i = puzzle[p].getX(); i < puzzle[p].getX() + puzzle[p].getLength(); i++) {
+			for (int j = puzzle[p].getY(); j < puzzle[p].getY() + puzzle[p].getWidth(); j++) {
+				for (int k = puzzle[p].getZ(); k < puzzle[p].getZ() + puzzle[p].getWidth(); k++) {
+
+					if (i < frameLength && j < frameWidth && k < frameHeight) {
+
+						puzzleFrame[i][j][k] = 1;
+
+					} else{
+
+						if (isInside) {
+							availableBoxes--;
+							availableValue -= puzzle[p].getValue();
+							isInside = false;
+						}
+						
+						continue;
+					}
+
+				}
+			}
+		}
 
 		for (int i = puzzle[p].getY(); i < puzzle[p].getY() + puzzle[p].getHeight(); i++) {
 			for (int j = puzzle[p].getX(); j < puzzle[p].getX() + puzzle[p].getWidth(); j++) {
@@ -130,7 +155,7 @@ double PuzzleIndividual::fitnessEval() {
 					puzzleFrame[i][j] = 0;
 				}
 				else {
-					continue;
+					
 				}
 
 			}
@@ -151,10 +176,11 @@ double PuzzleIndividual::fitnessEval() {
 	}
 
 	double occupiedPercent = ((double)occupiedSpace / (double)(frameWidth*frameHeight*frameLength)) * 100.0;
-	double
+	double valuePercent = (double)availableValue / (double) maxValue;
+	double boxPercent = (double)availableBoxes / (double) puzzle.size();
 
 
-	return ;
+	return occupiedPercent * fillFitnessPercentage + valuePercent * valueFitnessPercentage + boxPercent * boxInFitnessPercentage;
 }
 
 
