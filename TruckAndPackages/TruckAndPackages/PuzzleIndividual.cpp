@@ -7,16 +7,13 @@ PuzzleIndividual::PuzzleIndividual() {
 
 }
 
-PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int n, double C, int MAX_MUTATION, double CHANGE_SUCCESS_RATE, int frameWidth, int frameHeight) :
-	C(C), CHANGE_SUCCESS_RATE(CHANGE_SUCCESS_RATE), MAX_MUTATION(MAX_MUTATION) {
+PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight) {
 	this->puzzle = pieces;
 	this->frameWidth = frameWidth;
 	this->frameHeight = frameHeight;
 
 	this->fitness = 0.0;
 
-	this->overallLearningRate = 1 / sqrt(2 * n);
-	this->coordinateWiseLearningRate = 1 / sqrt((2 * sqrt(n)));
 	this->mutationSize = 1.0;
 
 	this->mutationSuccesses = 0;
@@ -78,12 +75,6 @@ double PuzzleIndividual::fitnessEval() {
 		}
 	}
 
-	//if (freeSpace < 5000) {
-	//	cout << "FREE SPACE = " << freeSpace << endl;
-	//}
-
-
-	//cout << "Free Space Calculated" << endl;
 	return ((double)1 - ((double)((double)freeSpace / ((double)(frameWidth * frameHeight))))) * (double)100;
 }
 
@@ -176,27 +167,6 @@ void PuzzleIndividual::mutate() {
 
 	}
 
-	if (fitnessEval() > fitness) {
-		//If mutation made the answer better, increment mutation counter
-		mutationSuccesses++;
-	}
-
-	if (mutationSuccesses / mutationCount > CHANGE_SUCCESS_RATE) {
-		//If mutation success rate more than wanted change success rate, Increase mutation rate
-		mutationRate /= C;
-	}
-	else {
-		//If mutation success rate less than wanted change success rate, Decrease mutation rate
-		mutationRate *= C;
-	}
-
-	if (mutationRate > 1.0) {
-		mutationRate = 1.0;
-	}
-	else if (mutationRate < 0.0) {
-		mutationRate = 0.0;
-	}
-
 }
 
 void PuzzleIndividual::crossover(PuzzleIndividual & partner) {
@@ -273,22 +243,6 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner) {
 		this->puzzle = temp[2].puzzle;
 		partner.puzzle = temp[1].puzzle;
 
-	}
-
-	if (crossoverSuccesses / crossoverCount > CHANGE_SUCCESS_RATE) {
-		//If crossover success rate more than wanted change success rate, Increase crossover rate
-		crossoverRate /= C;
-	}
-	else {
-		//If crossover success rate less than wanted change success rate, Decrease crossover rate
-		crossoverRate *= C;
-	}
-
-	if (crossoverRate > 1.0) {
-		crossoverRate = 1.0;
-	}
-	else if (crossoverRate < 0.0) {
-		crossoverRate = 0.0;
 	}
 
 }

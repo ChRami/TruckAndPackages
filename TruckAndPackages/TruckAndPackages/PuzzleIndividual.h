@@ -36,7 +36,7 @@ public:
 	double fitness;
 
 	PuzzleIndividual();
-	PuzzleIndividual(vector<PuzzlePiece> pieces, int n, double C, int MAX_MUTATION, double CHANGE_SUCCESS_RATE, int frameWidth, int frameHeight);
+	PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight);
 
 	vector<PuzzlePiece> getPuzzle();
 	double getFitness();
