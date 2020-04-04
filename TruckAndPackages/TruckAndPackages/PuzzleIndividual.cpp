@@ -7,7 +7,7 @@ PuzzleIndividual::PuzzleIndividual() {
 
 }
 
-PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate) {
+PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage) {
 	this->puzzle = pieces;
 	this->frameWidth = frameWidth;
 	this->frameHeight = frameHeight;
@@ -20,6 +20,10 @@ PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, i
 	this->MAX_MUTATION = MAX_MUTATION;
 
 	this->learningRate = learningRate;
+
+	this->fillFitnessPercentage = fillFitnessPercentage;
+	this->valueFitnessPercentage = valueFitnessPercentage;
+	this->boxInFitnessPercentage = boxInFitnessPercentage;
 
 }
 
@@ -37,9 +41,79 @@ void PuzzleIndividual::setFitness(double fitness) {
 
 double PuzzleIndividual::fitnessEval() {
 
-	vector<vector<int>> puzzleFrame = vector<vector<int>>(frameHeight, vector<int>(frameWidth, 1));
+	vector<vector<vector<int>>> puzzleFrame = vector<vector<vector<int>>>(frameLength, vector<vector<int>>(frameWidth, vector<int>(frameHeight, 0)));
 
-	vector<thread> threads = vector<thread>(this->puzzle.size());
+	int maxX = 0;
+	int maxY = 0;
+	int maxZ = 0;
+
+	int minX = 1000;
+	int minY = 1000;
+	int minZ = 1000;
+
+	int availableValue = 0;
+
+	for (int p = 0; p < puzzle.size(); p++) { //Trimming the summing tripple for loop
+
+		availableValue += puzzle[p].getValue();
+
+		if (maxX != frameLength) {
+			if (maxX <= puzzle[p].getX() && puzzle[p].getX() < frameLength) {
+				maxX = puzzle[p].getX();
+			}
+			else if(puzzle[p].getX() >= frameLength) {
+				maxX = frameLength;
+			}
+		}
+
+		if (maxY != frameWidth) {
+			if (maxY <= puzzle[p].getY() && puzzle[p].getY() < frameWidth) {
+				maxY = puzzle[p].getY();
+			}
+			else if (puzzle[p].getY() >= frameLength) {
+				maxY = frameLength;
+			}
+		}
+
+		if (maxZ != frameHeight) {
+			if (maxZ <= puzzle[p].getZ() && puzzle[p].getZ() < frameHeight) {
+				maxZ = puzzle[p].getZ();
+			}
+			else if (puzzle[p].getZ() >= frameHeight) {
+				maxZ = frameHeight;
+			}
+		}
+
+		if (minX != 0) {
+			if (minX >= puzzle[p].getX() && puzzle[p].getX() > 0) {
+				minX = puzzle[p].getX();
+			}
+			else if (puzzle[p].getX() == 0) {
+				minX = 0;
+			}
+		}
+		
+		if (minY != 0) {
+			if (minY >= puzzle[p].getY() && puzzle[p].getY() > 0) {
+				minY = puzzle[p].getY();
+			}
+			else if (puzzle[p].getY() == 0) {
+				minY = 0;
+			}
+		}
+
+		if (minZ != 0) {
+			if (minZ >= puzzle[p].getZ() && puzzle[p].getZ() > 0) {
+				minZ = puzzle[p].getZ();
+			}
+			else if (puzzle[p].getZ() == 0) {
+				minZ = 0;
+			}
+		}
+
+	}
+
+
 
 	for (int p = 0; p < puzzle.size(); p++) {
 
@@ -66,15 +140,21 @@ double PuzzleIndividual::fitnessEval() {
 
 	//cout << "PUZZLE FRAME MADE" << endl; 
 
-	int freeSpace = 0;
+	int occupiedSpace = 0;
 
-	for (int i = 0; i < frameHeight; i++) {
-		for (int j = 0; j < frameWidth; j++) {
-			freeSpace += puzzleFrame[i][j];
+	for (int i = minX; i < maxX; i++) {
+		for (int j = minY; j < maxY; j++) {
+			for (int k = minZ; k < maxZ; k++) {
+				occupiedSpace += puzzleFrame[i][j][k];
+			}
 		}
 	}
 
-	return ((double)1 - ((double)((double)freeSpace / ((double)(frameWidth * frameHeight))))) * (double)100;
+	double occupiedPercent = ((double)occupiedSpace / (double)(frameWidth*frameHeight*frameLength)) * 100.0;
+	double
+
+
+	return ;
 }
 
 

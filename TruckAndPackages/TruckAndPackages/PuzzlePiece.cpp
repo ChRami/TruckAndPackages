@@ -3,13 +3,14 @@
 PuzzlePiece::PuzzlePiece() {
 }
 
-PuzzlePiece::PuzzlePiece(int x, int y, int z, int length, int width, int height) {
+PuzzlePiece::PuzzlePiece(int x, int y, int z, int length, int width, int height, int value) {
 	this->length = length;
 	this->height = height;
 	this->width = width;
 	this->x = x;
 	this->y = y;
 	this->z = z;
+	this->value = value;
 }
 
 int PuzzlePiece::getHeight() const {
@@ -34,6 +35,10 @@ int PuzzlePiece::getY() const {
 
 int PuzzlePiece::getZ() const {
 	return this->z;
+}
+
+int PuzzlePiece::getValue() const {
+	return this->value;
 }
 
 void PuzzlePiece::rotatePiece(int choice) {

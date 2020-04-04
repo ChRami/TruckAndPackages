@@ -19,13 +19,17 @@ private:
 
 	double learningRate;
 
+	double fillFitnessPercentage;
+	double valueFitnessPercentage;
+	double boxInFitnessPercentage;
+
 public:
 
 	vector<PuzzlePiece> puzzle;
 	double fitness;
 
 	PuzzleIndividual();
-	PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate);
+	PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage);
 
 	vector<PuzzlePiece> getPuzzle();
 	double getFitness();
