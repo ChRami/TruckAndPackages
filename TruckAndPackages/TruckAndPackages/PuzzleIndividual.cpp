@@ -7,7 +7,7 @@ PuzzleIndividual::PuzzleIndividual() {
 
 }
 
-PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage) {
+PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameLength, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage) {
 	this->puzzle = pieces;
 	this->frameWidth = frameWidth;
 	this->frameHeight = frameHeight;
@@ -52,6 +52,7 @@ double PuzzleIndividual::fitnessEval() {
 	int minZ = 1000;
 
 	int availableValue = 0;
+	int availableBoxes = puzzle.size();
 
 	for (int p = 0; p < puzzle.size(); p++) { //Trimming the summing tripple for loop
 
@@ -113,32 +114,36 @@ double PuzzleIndividual::fitnessEval() {
 
 	}
 
-
+	int maxValue = availableValue;
 
 	for (int p = 0; p < puzzle.size(); p++) {
 
+		bool isInside = true;
 
-		for (int i = puzzle[p].getY(); i < puzzle[p].getY() + puzzle[p].getHeight(); i++) {
-			for (int j = puzzle[p].getX(); j < puzzle[p].getX() + puzzle[p].getWidth(); j++) {
+		for (int i = puzzle[p].getX(); i < puzzle[p].getX() + puzzle[p].getLength(); i++) {
+			for (int j = puzzle[p].getY(); j < puzzle[p].getY() + puzzle[p].getWidth(); j++) {
+				for (int k = puzzle[p].getZ(); k < puzzle[p].getZ() + puzzle[p].getWidth(); k++) {
 
-				if (i < puzzleFrame.size() && j < puzzleFrame[i].size()) {
+					if (i < frameLength && j < frameWidth && k < frameHeight) {
 
-					//cout << "PUZZLE PIECES IN PUZZLE FRAME" << endl;
-					//cout << i << " < " << puzzleFrame.size() << endl;
-					//cout << j << " < " << puzzleFrame[i].size() << endl;
+						puzzleFrame[i][j][k] = 1;
 
-					puzzleFrame[i][j] = 0;
+					} else{
+
+						if (isInside) {
+							availableBoxes--;
+							availableValue -= puzzle[p].getValue();
+							isInside = false;
+						}
+						
+						continue;
+					}
+
 				}
-				else {
-					continue;
-				}
-
 			}
 		}
 
 	}
-
-	//cout << "PUZZLE FRAME MADE" << endl; 
 
 	int occupiedSpace = 0;
 
@@ -151,10 +156,11 @@ double PuzzleIndividual::fitnessEval() {
 	}
 
 	double occupiedPercent = ((double)occupiedSpace / (double)(frameWidth*frameHeight*frameLength)) * 100.0;
-	double
+	double valuePercent = ((double)availableValue / (double) maxValue) * 100.0;
+	double boxPercent = ((double)availableBoxes / (double) puzzle.size()) * 100.0;
 
 
-	return ;
+	return occupiedPercent * fillFitnessPercentage + valuePercent * valueFitnessPercentage + boxPercent * boxInFitnessPercentage;
 }
 
 
