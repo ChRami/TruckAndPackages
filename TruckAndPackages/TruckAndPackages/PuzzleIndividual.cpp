@@ -143,27 +143,7 @@ double PuzzleIndividual::fitnessEval() {
 			}
 		}
 
-		for (int i = puzzle[p].getY(); i < puzzle[p].getY() + puzzle[p].getHeight(); i++) {
-			for (int j = puzzle[p].getX(); j < puzzle[p].getX() + puzzle[p].getWidth(); j++) {
-
-				if (i < puzzleFrame.size() && j < puzzleFrame[i].size()) {
-
-					//cout << "PUZZLE PIECES IN PUZZLE FRAME" << endl;
-					//cout << i << " < " << puzzleFrame.size() << endl;
-					//cout << j << " < " << puzzleFrame[i].size() << endl;
-
-					puzzleFrame[i][j] = 0;
-				}
-				else {
-					
-				}
-
-			}
-		}
-
 	}
-
-	//cout << "PUZZLE FRAME MADE" << endl; 
 
 	int occupiedSpace = 0;
 
