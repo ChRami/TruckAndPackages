@@ -12,10 +12,12 @@ private:
 	int y;
 	int z;
 
+	int value;
+
 public:
 
 	PuzzlePiece();
-	PuzzlePiece(int x, int y, int z, int length, int width, int height);
+	PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
 
 	int getLength() const;
 	int getWidth() const;
@@ -23,6 +25,7 @@ public:
 	int getX() const;
 	int getY() const;
 	int getZ() const;
+	int getValue() const;
 	void setX(int x);
 	void setY(int y);
 	void setZ(int z);
