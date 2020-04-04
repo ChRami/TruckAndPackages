@@ -12,6 +12,8 @@ private:
 	int maxGenerations = 500;
 	int populationSize = 500;
 
+	int survivalThreashold = 5;
+
 	double fillFitnessPercentage = 0.6;
 	double valueFitnessPercentage = 0.3;
 	double boxInFitnessPercentage = 0.1;
@@ -46,8 +48,34 @@ public:
 			cout << "Generation " << g << endl;
 
 			//Mutation
-
+			for (int i = 0; i < populationSize - survivalThreashold; i++) {
+				pop[i].mutate(pm);
+			}
+			
 			//Crossover
+			vector<int> availableCrossoverItems;
+
+			for (int i = 0; i < populationSize; i++) {
+				availableCrossoverItems.push_back(i);
+			}
+
+			for (int i = 0; i < populationSize / 2; i++) {
+
+				int firstIndex = availableCrossoverItems.size() - 1;
+				int first = availableCrossoverItems[firstIndex];
+
+				availableCrossoverItems.pop_back();
+
+				int secondIndex = rand() % availableCrossoverItems.size();
+				int second = availableCrossoverItems[secondIndex];
+
+				availableCrossoverItems.erase(availableCrossoverItems.begin() + secondIndex);
+
+				PuzzleIndividual & partner = pop[second];
+
+				pop[first].crossover(partner, pc);
+
+			}
 
 			//Fitness
 			for (int i = 0; i < populationSize; i++) {
