@@ -10,33 +10,22 @@ class PuzzleIndividual {
 
 private:
 
+	int frameLength;
 	int frameHeight;
 	int frameWidth;
 
-	double overallLearningRate;
-	double coordinateWiseLearningRate;
-	double mutationSize;
+	int mutationSize;
 	int MAX_MUTATION;
 
-	double C;
-	double CHANGE_SUCCESS_RATE;
-
-	int mutationSuccesses;
-	int mutationCount;
-
-	int crossoverSuccesses;
-	int crossoverCount;
+	double learningRate;
 
 public:
-
-	double mutationRate;
-	double crossoverRate;
 
 	vector<PuzzlePiece> puzzle;
 	double fitness;
 
 	PuzzleIndividual();
-	PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight);
+	PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate);
 
 	vector<PuzzlePiece> getPuzzle();
 	double getFitness();
@@ -44,9 +33,9 @@ public:
 
 	double fitnessEval();
 
-	void mutate();
+	void mutate(double mutationRate);
 
-	void crossover(PuzzleIndividual & partner);
+	void crossover(PuzzleIndividual & partner, double crossoverRate);
 
 	double dRand(double min, double max);
 

@@ -5,26 +5,32 @@ using namespace std;
 
 class PuzzlePiece {
 private:
-	int height;
+	int length;
 	int width;
+	int height;
 	int x;
 	int y;
+	int z;
 
 public:
 
 	PuzzlePiece();
-	PuzzlePiece(int x, int y, int width, int height);
+	PuzzlePiece(int x, int y, int z, int length, int width, int height);
 
-	int getHeight() const;
+	int getLength() const;
 	int getWidth() const;
+	int getHeight() const;
 	int getX() const;
 	int getY() const;
+	int getZ() const;
 	void setX(int x);
 	void setY(int y);
+	void setZ(int z);
 
-	void rotatePiece();
+	void rotatePiece(int choice);
 	void moveX(int amount);
 	void moveY(int amount);
+	void moveZ(int amount);
 
 	string toString();
 

@@ -7,20 +7,19 @@ PuzzleIndividual::PuzzleIndividual() {
 
 }
 
-PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight) {
+PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate) {
 	this->puzzle = pieces;
 	this->frameWidth = frameWidth;
 	this->frameHeight = frameHeight;
+	this->frameLength = frameLength;
 
 	this->fitness = 0.0;
 
-	this->mutationSize = 1.0;
+	this->mutationSize = initialMutationSize;
 
-	this->mutationSuccesses = 0;
-	this->mutationCount = 0;
+	this->MAX_MUTATION = MAX_MUTATION;
 
-	this->crossoverSuccesses = 0;
-	this->mutationCount = 0;
+	this->learningRate = learningRate;
 
 }
 
@@ -79,9 +78,7 @@ double PuzzleIndividual::fitnessEval() {
 }
 
 
-void PuzzleIndividual::mutate() {
-
-	this->mutationCount++;
+void PuzzleIndividual::mutate(double mutationRate) {
 
 	for (int i = 0; i < puzzle.size(); i++) {
 
@@ -105,8 +102,7 @@ void PuzzleIndividual::mutate() {
 				//Changing X or Y by an amount
 
 				//Selecting magnetude of mutation size
-				this->mutationSize = mutationSize *
-					exp(this->overallLearningRate * dRand(0, 1) + this->coordinateWiseLearningRate * dRand(0, 1));
+				this->mutationSize = mutationSize * exp(this->learningRate * dRand(0, 1));
 
 				//Selecting sign of mutation size
 				this->mutationSize = rand() % 2 == 0 ? this->mutationSize : -1 * this->mutationSize;
@@ -169,9 +165,7 @@ void PuzzleIndividual::mutate() {
 
 }
 
-void PuzzleIndividual::crossover(PuzzleIndividual & partner) {
-
-	this->crossoverCount++;
+void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRate) {
 
 	PuzzleIndividual child = *this;
 
@@ -237,9 +231,6 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner) {
 
 	//IF CHILD CAME OUT BETTER THAN EITHER PARENT
 	if (temp[2].getFitness() == child.getFitness() || temp[1].getFitness() == child.getFitness()) {
-
-		//If crossover made the answer better, increment crossover counter
-		crossoverSuccesses++;
 		this->puzzle = temp[2].puzzle;
 		partner.puzzle = temp[1].puzzle;
 
