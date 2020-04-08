@@ -176,6 +176,7 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 			//1. Move with respect to X
 			//2. Move with respect to Y
+			//3. Move with respect to Z
 			//3. Rotate
 			//4. Randomize location
 

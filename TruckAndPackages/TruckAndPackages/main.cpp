@@ -2,6 +2,7 @@
 #include <iostream>
 #include "PuzzleIndividual.h"
 #include "PuzzlePiece.h"
+#include <fstream>
 
 using namespace std;
 
@@ -116,15 +117,56 @@ public:
 
 	}
 
+	static PuzzleProblem jsonToObj(string fileDir) {
+		ifstream ifs(fileDir);
+
+		string message = "";
+
+		for (string line; getline(ifs, line);) {
+			message += line;
+		}
+
+		//Json::Reader reader;
+		Json::Value obj;
+		//reader.parse(ifs, obj); // reader can also read strings
+
+		Json::CharReaderBuilder builder;
+		Json::CharReader *reader = builder.newCharReader();
+
+		Json::Value output;
+		string errors;
+
+		reader->parse(message.c_str(), message.c_str() + message.length(), &obj, &errors);
+
+		int pieces = 0;
+
+		int length = obj["truckLength"].asInt();
+		int width = obj["truckWidth"].asInt();
+		int height = obj["truckHeight"].asInt();
+		pieces = obj["numberOfBoxes"].asInt();
+		vector<PuzzlePiece> puzzlePieces;
+
+		for (const Json::Value& value : obj["boxArrangement"]["0"]) {
+			puzzlePieces.push_back(PuzzlePiece(value[0].asInt(), value[1].asInt(), value[2].asInt(), value[3].asInt()));
+		}
+
+		ifs.close();
+
+		return PuzzleProblem(length, width, height, pieces, puzzlePieces);
+
+	}
+
+
 };
+
 
 int main() {
 	
 	//Call to Json Here to create PuzzleIndividual Object
-	PuzzleProblem a;
+	PuzzleProblem puzzleProblem = PuzzleProblem::jsonToObj("./TruckandPackages.json");
 
 	//Start Algorithm
-	a.startAlgorithm();
+	puzzleProblem.startAlgorithm();
 
 	cout << "Hello World" << endl;
 	
