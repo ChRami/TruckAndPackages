@@ -172,7 +172,7 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 		if (mutation < mutationRate) { //Decide whether you will mutate the piece of not
 
-			int choice = rand() % 4; //4 mutations possible
+			int choice = rand() % 3; //4 mutations possible
 
 			//1. Move with respect to X
 			//2. Move with respect to Y
@@ -185,6 +185,7 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 			switch (choice) {
 			case 0:
+
 			case 1:
 				//Changing X or Y by an amount
 

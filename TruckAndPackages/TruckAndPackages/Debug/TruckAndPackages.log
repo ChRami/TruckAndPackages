@@ -1,13 +1,7 @@
 ﻿  main.cpp
 d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(39): warning C4018: '<': signed/unsigned mismatch
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(152): error C2440: '<function-style-cast>': cannot convert from 'initializer list' to 'PuzzlePiece'
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(152): note: No constructor could take the source type, or constructor overload resolution was ambiguous
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(157): error C2440: '<function-style-cast>': cannot convert from 'initializer list' to 'PuzzleProblem'
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(157): note: No constructor could take the source type, or constructor overload resolution was ambiguous
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(163): error C2039: 'jsonToObj': is not a member of 'PuzzleProblem'
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(9): note: see declaration of 'PuzzleProblem'
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(165): error C2512: 'PuzzleProblem': no appropriate default constructor available
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(9): note: see declaration of 'PuzzleProblem'
+d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(160): error C2275: 'PuzzlePiece': illegal use of this type as an expression
+  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.h(6): note: see declaration of 'PuzzlePiece'
   PuzzleIndividual.cpp
 d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(57): warning C4018: '<': signed/unsigned mismatch
 d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(119): warning C4018: '<': signed/unsigned mismatch
