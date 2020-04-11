@@ -2,6 +2,7 @@
 #include <iostream>
 #include "PuzzleIndividual.h"
 #include "PuzzlePiece.h"
+#include <fstream>
 
 using namespace std;
 
@@ -116,15 +117,61 @@ public:
 
 	}
 
+	static PuzzleProblem jsonToObj(string fileDir) {
+		ifstream ifs(fileDir);
+
+		string message = "";
+
+		for (string line; getline(ifs, line);) {
+			message += line;
+		}
+
+		//Json::Reader reader;
+		Json::Value obj;
+		//reader.parse(ifs, obj); // reader can also read strings
+
+		Json::CharReaderBuilder builder;
+		Json::CharReader *reader = builder.newCharReader();
+
+		Json::Value output;
+		string errors;
+
+		reader->parse(message.c_str(), message.c_str() + message.length(), &obj, &errors);
+
+		int pieces = 0;
+
+		int length = obj["truckLength"].asInt();
+		int width = obj["truckWidth"].asInt();
+		int height = obj["truckHeight"].asInt();
+		pieces = obj["numberOfBoxes"].asInt();
+		vector<PuzzlePiece> puzzlePieces;
+
+		//PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
+		for (int i = 0; i < pieces; i++) {
+			for (const Json::Value& value : obj["boxArrangement"][i]) {
+				puzzlePieces.push_back(PuzzlePiece(value["pos"][0].asInt(), value["pos"][1].asInt(), value["pos"][2].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["value"].asInt()));
+			}
+		}
+
+		ifs.close();
+
+		//PuzzleProblem(vector<vector<PuzzlePiece>> newPuzzles, int frameLength, int frameWidth, int frameHeight)
+
+		return PuzzleProblem(PuzzlePiece,length,width,height);
+
+	}
+
+
 };
+
 
 int main() {
 	
 	//Call to Json Here to create PuzzleIndividual Object
-	PuzzleProblem a;
+	PuzzleProblem puzzleProblem = PuzzleProblem::jsonToObj("./TruckandPackages.json");
 
 	//Start Algorithm
-	a.startAlgorithm();
+	puzzleProblem.startAlgorithm();
 
 	cout << "Hello World" << endl;
 	
