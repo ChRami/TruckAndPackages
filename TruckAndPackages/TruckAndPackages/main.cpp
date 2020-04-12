@@ -1,7 +1,9 @@
 #include "json/json.h"
 #include <iostream>
+#include <thread>
 #include "PuzzleIndividual.h"
 #include "PuzzlePiece.h"
+#include <algorithm>
 #include <fstream>
 
 using namespace std;
@@ -9,6 +11,10 @@ using namespace std;
 class PuzzleProblem {
 
 private:
+
+	ofstream output;
+
+	int randomSeed;
 
 	int maxGenerations = 500;
 	int populationSize = 500;
@@ -32,9 +38,17 @@ private:
 
 	vector<PuzzleIndividual> pop;
 
+	//Scoring All-Time Best
+	PuzzleIndividual allTimeBest;
+	double allTimeBestScore = 0.0;
+
 public:
 
 	PuzzleProblem(vector<vector<PuzzlePiece>> newPuzzles, int frameLength, int frameWidth, int frameHeight) {
+
+		randomSeed = time(0);
+
+		srand(randomSeed);
 
 		for (int i = 0; i < newPuzzles.size(); i++) {
 			pop.push_back(PuzzleIndividual(newPuzzles[i], frameLength, frameWidth, frameHeight, initialMutationSize, MAX_MUTATION, learningRate, fillFitnessPercentage, valueFitnessPercentage, boxInFitnessPercentage));
@@ -43,6 +57,10 @@ public:
 	}
 
 	void startAlgorithm() {
+
+		string fileName = "Result_Project_" + to_string(randomSeed) + ".csv";
+
+		output.open(fileName);
 
 		for (int g = 0; g < maxGenerations; g++) {
 
@@ -81,6 +99,8 @@ public:
 			//Fitness
 			for (int i = 0; i < populationSize; i++) {
 				pop[i].setFitness(pop[i].fitnessEval());
+
+
 			}
 		
 			//Sorting
@@ -107,13 +127,25 @@ public:
 				pm -= pmChangeRate;
 			}
 
+			if (allTimeBestScore < pop[pop.size() - 1].fitness) {
+				allTimeBest = pop[pop.size() - 1];
+				allTimeBestScore = pop[pop.size() - 1].fitness;
+			}
+
 			//Print Status Info
 			cout << "Fitness Leader (Fill%): " << pop[pop.size() - 1].fitness << endl;
 			cout << "Pieces: " << pop[pop.size() - 1].toString() << endl;
 			cout << "Mutation %: " << pm << endl;
 			cout << "Crossover %: " << pc << endl << endl;
 
+			output << pop[pop.size() - 1].fitness << "," << averageFitness << endl;
+
 		}
+
+		output << "ALL TIME BEST" << endl;
+		output << allTimeBestScore << "," << allTimeBest.toString();
+
+		output.close();
 
 	}
 
