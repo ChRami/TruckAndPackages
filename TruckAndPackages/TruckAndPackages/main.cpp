@@ -176,20 +176,26 @@ public:
 		int width = obj["truckWidth"].asInt();
 		int height = obj["truckHeight"].asInt();
 		pieces = obj["numberOfBoxes"].asInt();
-		vector<PuzzlePiece> puzzlePieces;
+
+		vector<vector<PuzzlePiece>> puzzlePieces;
 
 		//PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
 		for (int i = 0; i < pieces; i++) {
+
+			vector<PuzzlePiece> puzzlePieceList;
+
 			for (const Json::Value& value : obj["boxArrangement"][i]) {
-				puzzlePieces.push_back(PuzzlePiece(value["pos"][0].asInt(), value["pos"][1].asInt(), value["pos"][2].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["value"].asInt()));
+				puzzlePieceList.push_back(PuzzlePiece(value["pos"][0].asInt(), value["pos"][1].asInt(), value["pos"][2].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["value"].asInt()));
 			}
+
+			puzzlePieces.push_back(puzzlePieceList);
 		}
 
 		ifs.close();
 
 		//PuzzleProblem(vector<vector<PuzzlePiece>> newPuzzles, int frameLength, int frameWidth, int frameHeight)
 
-		return PuzzleProblem(PuzzlePiece,length,width,height);
+		return PuzzleProblem(puzzlePieces,length,width,height);
 
 	}
 
