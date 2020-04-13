@@ -172,21 +172,22 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 		if (mutation < mutationRate) { //Decide whether you will mutate the piece of not
 
-			int choice = rand() % 3; //4 mutations possible
+			int choice = rand() % 5; //4 mutations possible
 
 			//1. Move with respect to X
 			//2. Move with respect to Y
 			//3. Move with respect to Z
-			//3. Rotate
-			//4. Randomize location
+			//4. Rotate
+			//5. Randomize location
 
 			int change = 0;
 			int changeCounter = 0;
 
 			switch (choice) {
 			case 0:
-
 			case 1:
+
+			case 2:
 				//Changing X or Y by an amount
 
 				//Selecting magnetude of mutation size
@@ -221,7 +222,7 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 					this->puzzle[i].moveX(change);
 				}
-				else {
+				else if(choice == 1){
 					while (puzzle[i].getY() + change > frameWidth || puzzle[i].getY() + change < 0) {
 						change = round(change / 2);
 						changeCounter++;
@@ -234,16 +235,33 @@ void PuzzleIndividual::mutate(double mutationRate) {
 					this->puzzle[i].moveY(change);
 				}
 
+				else {
+					while (puzzle[i].getZ() + change > frameWidth || puzzle[i].getZ() + change < 0) {
+						change = round(change / 2);
+						changeCounter++;
+
+						if (changeCounter > 5) {
+							change = 0;
+							break;
+						}
+
+					}
+
+					this->puzzle[i].moveZ(change);
+				}
+
 				break;
 
-			case 2:
-				//Rotating the piece
-				this->puzzle[i].rotatePiece();
-				break;
 			case 3:
+				//Rotating the piece
+				int choice = rand() % 3;
+				this->puzzle[i].rotatePiece(choice);
+				break;
+			case 4:
 				//Randomly resetting the piece's location
 				this->puzzle[i].setX(rand() % frameWidth);
 				this->puzzle[i].setY(rand() % frameHeight);
+				this->puzzle[i].setZ(rand() % frameHeight);
 				break;
 			}
 
@@ -268,7 +286,10 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 
 			//1. Only crossover x
 			//2. Only crossover y
-			//3. crossover x and y
+			//3. Only crossover z
+			//4. crossover x and y
+			//5. crossover y and z
+			//6. crossover x and z
 
 			int newY = 0;
 			int newX = 0;
