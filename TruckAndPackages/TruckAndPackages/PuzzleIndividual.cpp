@@ -172,11 +172,9 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 		if (mutation < mutationRate) { //Decide whether you will mutate the piece of not
 
-			int choice = rand() % 5; //4 mutations possible
+			int choice = rand() % 3; //4 mutations possible
 
-			//1. Move with respect to X
-			//2. Move with respect to Y
-			//3. Move with respect to Z
+			//1. Move with respect to X, Y or Z
 			//4. Rotate
 			//5. Randomize location
 
@@ -185,9 +183,9 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 			switch (choice) {
 			case 0:
-			case 1:
 
-			case 2:
+				int choice = rand() % 3;
+
 				//Changing X or Y by an amount
 
 				//Selecting magnetude of mutation size
@@ -252,12 +250,12 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 				break;
 
-			case 3:
+			case 1:
 				//Rotating the piece
 				int choice = rand() % 3;
 				this->puzzle[i].rotatePiece(choice);
 				break;
-			case 4:
+			case 2:
 				//Randomly resetting the piece's location
 				this->puzzle[i].setX(rand() % frameWidth);
 				this->puzzle[i].setY(rand() % frameHeight);
@@ -282,7 +280,7 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 
 		if (crossover < crossoverRate) {
 
-			int choice = rand() % 6;//3 crossover possible
+			int choice = rand() % 7;
 
 			//1. Only crossover x
 			//2. Only crossover y
@@ -290,6 +288,7 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 			//4. crossover x and y
 			//5. crossover y and z
 			//6. crossover x and z
+			//7. crossover x, y and z
 
 			int newY = 0;
 			int newX = 0;
@@ -338,6 +337,16 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
 
 				child.puzzle[i].setX(newX);
+				child.puzzle[i].setZ(newZ);
+
+				break;
+			case 6:
+				newX = round((this->getPuzzle()[i].getX() + partner.getPuzzle()[i].getX()) / 2);
+				newY = round((this->getPuzzle()[i].getY() + partner.getPuzzle()[i].getY()) / 2);
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setX(newX);
+				child.puzzle[i].setY(newY);
 				child.puzzle[i].setZ(newZ);
 
 				break;
