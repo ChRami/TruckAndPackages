@@ -282,7 +282,7 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 
 		if (crossover < crossoverRate) {
 
-			int choice = rand() % 3;//3 crossover possible
+			int choice = rand() % 6;//3 crossover possible
 
 			//1. Only crossover x
 			//2. Only crossover y
@@ -293,6 +293,7 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 
 			int newY = 0;
 			int newX = 0;
+			int newZ = 0;
 
 			switch (choice) {
 			case 0:
@@ -310,12 +311,34 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 
 				break;
 			case 2:
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setZ(newZ);
+
+				break;
+			case 3:
 
 				newX = round((this->getPuzzle()[i].getX() + partner.getPuzzle()[i].getX()) / 2);
 				newY = round((this->getPuzzle()[i].getY() + partner.getPuzzle()[i].getY()) / 2);
 
 				child.puzzle[i].setX(newX);
 				child.puzzle[i].setY(newY);
+
+				break;
+			case 4:
+				newY = round((this->getPuzzle()[i].getY() + partner.getPuzzle()[i].getY()) / 2);
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setY(newY);
+				child.puzzle[i].setZ(newZ);
+
+				break;
+			case 5:
+				newX = round((this->getPuzzle()[i].getX() + partner.getPuzzle()[i].getX()) / 2);
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setX(newX);
+				child.puzzle[i].setZ(newZ);
 
 				break;
 			}
