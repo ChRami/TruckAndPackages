@@ -177,6 +177,8 @@ public:
 		int height = obj["truckHeight"].asInt();
 		pieces = obj["numberOfBoxes"].asInt();
 
+		//cout << "This is position 0 and 1" << obj["boxArrangement"]["0"]["pos"][0] << " " << obj["boxArrangement"]["0"]["pos"][1] << endl;
+
 		vector<vector<PuzzlePiece>> puzzlePieces;
 
 		//PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
@@ -184,7 +186,7 @@ public:
 
 			vector<PuzzlePiece> puzzlePieceList;
 
-			for (const Json::Value& value : obj["boxArrangement"][i]) {
+			for (const Json::Value& value : obj["boxArrangement"][to_string(i)]) {
 				puzzlePieceList.push_back(PuzzlePiece(value["pos"][0].asInt(), value["pos"][1].asInt(), value["pos"][2].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["value"].asInt()));
 			}
 

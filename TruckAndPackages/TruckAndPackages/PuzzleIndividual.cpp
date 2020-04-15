@@ -183,6 +183,7 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 			switch (choice) {
 			case 0:
+			{
 
 				int choice = rand() % 3;
 
@@ -220,7 +221,7 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 					this->puzzle[i].moveX(change);
 				}
-				else if(choice == 1){
+				else if (choice == 1) {
 					while (puzzle[i].getY() + change > frameWidth || puzzle[i].getY() + change < 0) {
 						change = round(change / 2);
 						changeCounter++;
@@ -249,18 +250,23 @@ void PuzzleIndividual::mutate(double mutationRate) {
 				}
 
 				break;
+			}
 
 			case 1:
+			{
 				//Rotating the piece
 				int choice = rand() % 3;
 				this->puzzle[i].rotatePiece(choice);
 				break;
+			}
 			case 2:
+			{
 				//Randomly resetting the piece's location
 				this->puzzle[i].setX(rand() % frameWidth);
 				this->puzzle[i].setY(rand() % frameHeight);
 				this->puzzle[i].setZ(rand() % frameHeight);
 				break;
+			}
 			}
 
 		}
