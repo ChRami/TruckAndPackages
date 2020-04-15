@@ -1,30 +1,4 @@
 ﻿  main.cpp
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(39): warning C4018: '<': signed/unsigned mismatch
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(160): error C2275: 'PuzzlePiece': illegal use of this type as an expression
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.h(6): note: see declaration of 'PuzzlePiece'
-  PuzzleIndividual.cpp
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(57): warning C4018: '<': signed/unsigned mismatch
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(119): warning C4018: '<': signed/unsigned mismatch
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(169): warning C4018: '<': signed/unsigned mismatch
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(192): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(206): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(211): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(225): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(240): error C2660: 'PuzzlePiece::rotatePiece': function does not take 0 arguments
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.h(36): note: see declaration of 'PuzzlePiece::rotatePiece'
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(259): warning C4018: '<': signed/unsigned mismatch
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(278): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(285): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(292): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(293): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(335): warning C4018: '<': signed/unsigned mismatch
-  PuzzlePiece.cpp
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(52): error C2374: 'temp': redefinition; multiple initialization
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(47): note: see declaration of 'temp'
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(57): error C2374: 'temp': redefinition; multiple initialization
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(47): note: see declaration of 'temp'
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(51): error C2360: initialization of 'temp' is skipped by 'case' label
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(47): note: see declaration of 'temp'
-d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(56): error C2360: initialization of 'temp' is skipped by 'case' label
-  d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\puzzlepiece.cpp(52): note: see declaration of 'temp'
-  Generating Code...
+d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(49): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+d:\concordia university\fifth year\winter semester\coen 432\project\code\truckandpackages\truckandpackages\truckandpackages\main.cpp(53): warning C4018: '<': signed/unsigned mismatch
+  TruckAndPackages.vcxproj -> D:\Concordia University\Fifth Year\Winter Semester\COEN 432\Project\Code\TruckAndPackages\TruckAndPackages\Debug\TruckAndPackages.exe
