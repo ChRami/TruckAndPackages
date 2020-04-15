@@ -262,8 +262,8 @@ void PuzzleIndividual::mutate(double mutationRate) {
 			case 2:
 			{
 				//Randomly resetting the piece's location
-				this->puzzle[i].setX(rand() % frameWidth);
-				this->puzzle[i].setY(rand() % frameHeight);
+				this->puzzle[i].setX(rand() % frameLength);
+				this->puzzle[i].setY(rand() % frameWidth);
 				this->puzzle[i].setZ(rand() % frameHeight);
 				break;
 			}
