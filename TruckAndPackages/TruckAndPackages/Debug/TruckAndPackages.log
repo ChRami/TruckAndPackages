@@ -1,5 +1,7 @@
 ﻿  main.cpp
-c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(49): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
-c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(53): warning C4018: '<': signed/unsigned mismatch
-c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(189): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(51): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(55): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(90): warning C4244: 'initializing': conversion from 'time_t' to 'double', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(106): warning C4244: 'initializing': conversion from 'time_t' to 'double', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(210): warning C4018: '<': signed/unsigned mismatch
   TruckAndPackages.vcxproj -> C:\Users\GamingPC\Documents\GitHub\TruckAndPackages\TruckAndPackages\Debug\TruckAndPackages.exe

@@ -16,8 +16,10 @@ private:
 
 	int randomSeed;
 
-	int maxGenerations = 500;
-	int populationSize = 500;
+	static const int NumberOfThreadsUsed = 8;
+
+	static const int maxGenerations = 100;
+	static const int populationSize = 50;
 
 	int survivalThreashold = 5;
 
@@ -51,7 +53,7 @@ public:
 		srand(randomSeed);
 
 		for (int i = 0; i < newPuzzles.size(); i++) {
-			pop.push_back(PuzzleIndividual(newPuzzles[i], frameLength, frameWidth, frameHeight, initialMutationSize, MAX_MUTATION, learningRate, fillFitnessPercentage, valueFitnessPercentage, boxInFitnessPercentage));
+			pop.push_back(PuzzleIndividual(newPuzzles[i], frameLength, frameWidth, frameHeight, initialMutationSize, MAX_MUTATION, learningRate, fillFitnessPercentage, valueFitnessPercentage, boxInFitnessPercentage, NumberOfThreadsUsed));
 		}
 
 	}
@@ -66,11 +68,15 @@ public:
 
 			cout << "Generation " << g << endl;
 
+			cout << "Mutation" << endl;
+
 			//Mutation
 			for (int i = 0; i < (populationSize - survivalThreashold); i++) {
 				pop[i].mutate(pm);
 			}
 			
+			cout << "Crossover" << endl;
+
 			//Crossover
 			vector<int> availableCrossoverItems;
 
@@ -79,6 +85,9 @@ public:
 			}
 
 			for (int i = 0; i < (populationSize / 2); i++) {
+
+				cout << "Crossover count: " << i << endl;
+				double initTime = time(0);
 
 				int firstIndex = availableCrossoverItems.size() - 1;
 				int first = availableCrossoverItems[firstIndex];
@@ -94,7 +103,13 @@ public:
 
 				pop[first].crossover(partner, pc);
 
+				double endTime = time(0);
+
+				cout << "Took: " << endTime - initTime << endl;
+
 			}
+
+			cout << "Fitness" << endl;
 
 			//Fitness
 			for (int i = 0; i < populationSize; i++) {
@@ -103,10 +118,14 @@ public:
 
 			}
 		
+			cout << "Sorting" << endl;
+
 			//Sorting
 			sort(pop.begin(), pop.end(), [](PuzzleIndividual const & a, PuzzleIndividual const & b) -> bool {
 				return a.fitness < b.fitness;
 			});
+
+			cout << "Recalculating pm" << endl;
 
 			//Recalculating pm
 			double totalFitness = 0;
@@ -131,6 +150,8 @@ public:
 				allTimeBest = pop[pop.size() - 1];
 				allTimeBestScore = pop[pop.size() - 1].fitness;
 			}
+
+			cout << "Printing";
 
 			//Print Status Info
 			cout << "Fitness Leader (Fill%): " << pop[pop.size() - 1].fitness << endl;
@@ -182,7 +203,7 @@ public:
 		vector<vector<PuzzlePiece>> puzzlePieces;
 
 		//PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
-		for (int i = 0; i < pieces; i++) {
+		for (int i = 0; i < maxGenerations; i++) {
 
 			vector<PuzzlePiece> puzzlePieceList;
 

@@ -7,7 +7,7 @@ PuzzleIndividual::PuzzleIndividual() {
 
 }
 
-PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameLength, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage) {
+PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameLength, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage, int numberOfThreads) {
 	this->puzzle = pieces;
 	this->frameWidth = frameWidth;
 	this->frameHeight = frameHeight;
@@ -24,6 +24,8 @@ PuzzleIndividual::PuzzleIndividual(vector<PuzzlePiece> pieces, int frameLength, 
 	this->fillFitnessPercentage = fillFitnessPercentage;
 	this->valueFitnessPercentage = valueFitnessPercentage;
 	this->boxInFitnessPercentage = boxInFitnessPercentage;
+
+	this->numberOfThreads = numberOfThreads;
 
 }
 
@@ -147,12 +149,42 @@ double PuzzleIndividual::fitnessEval() {
 
 	int occupiedSpace = 0;
 
-	for (int i = minX; i < maxX; i++) {
-		for (int j = minY; j < maxY; j++) {
-			for (int k = minZ; k < maxZ; k++) {
-				occupiedSpace += puzzleFrame[i][j][k];
+	vector<int> counts = vector<int>(numberOfThreads, 0);
+	vector<thread> threads;
+
+	int split = (maxX - minX)/numberOfThreads;
+
+	for (int t = 0; t < numberOfThreads; t++) {
+		threads.push_back(thread([t, minX, maxX, minY, maxY, minZ, maxZ, split, puzzleFrame, &counts]() {
+
+			if (t != counts.size() - 1) {
+				for (int i = minX + (split*t); i < minX + (split*(t + 1)); i++) {
+					for (int j = minY; j < maxY; j++) {
+						for (int k = minZ; k < maxZ; k++) {
+							counts[t] += puzzleFrame[i][j][k];
+						}
+					}
+				}
 			}
-		}
+			else {
+				for (int i = minX + (split*t); i < maxX; i++) {
+					for (int j = minY; j < maxY; j++) {
+						for (int k = minZ; k < maxZ; k++) {
+							counts[t] += puzzleFrame[i][j][k];
+						}
+					}
+				}
+			}
+
+		}));
+	}
+
+	for (int i = 0; i < numberOfThreads; i++) {
+		threads[i].join();
+	}
+
+	for (int i = 0; i < counts.size(); i++) {
+		occupiedSpace += counts[i];
 	}
 
 	double occupiedPercent = ((double)occupiedSpace / (double)(frameWidth*frameHeight*frameLength)) * 100.0;

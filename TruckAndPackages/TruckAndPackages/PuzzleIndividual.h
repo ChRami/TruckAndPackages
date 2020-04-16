@@ -10,6 +10,8 @@ class PuzzleIndividual {
 
 private:
 
+	int numberOfThreads;
+
 	int frameLength;
 	int frameHeight;
 	int frameWidth;
@@ -29,7 +31,7 @@ public:
 	double fitness;
 
 	PuzzleIndividual();
-	PuzzleIndividual(vector<PuzzlePiece> pieces, int frameLength, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage);
+	PuzzleIndividual(vector<PuzzlePiece> pieces, int frameLength, int frameWidth, int frameHeight, int initialMutationSize, int MAX_MUTATION, double learningRate, double fillFitnessPercentage, double valueFitnessPercentage, double boxInFitnessPercentage, int numberOfThreads);
 
 	vector<PuzzlePiece> getPuzzle();
 
