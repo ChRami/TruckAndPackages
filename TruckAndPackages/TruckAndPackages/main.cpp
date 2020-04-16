@@ -113,8 +113,9 @@ public:
 
 			//Fitness
 			for (int i = 0; i < populationSize; i++) {
-				pop[i].setFitness(pop[i].fitnessEval());
-
+				if (pop[i].getFitness() == 0) {
+					pop[i].setFitness(pop[i].fitnessEval());
+				}
 
 			}
 		

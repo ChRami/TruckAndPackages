@@ -1,7 +1,32 @@
-﻿  main.cpp
+﻿  PuzzleIndividual.cpp
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(59): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(121): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(186): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(201): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(225): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(239): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(244): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(258): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(271): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(314): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(338): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(345): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(351): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(358): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(359): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(366): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(367): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(374): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(375): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(382): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(383): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(384): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\puzzleindividual.cpp(441): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
 c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(51): warning C4244: '=': conversion from 'time_t' to 'int', possible loss of data
 c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(55): warning C4018: '<': signed/unsigned mismatch
 c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(90): warning C4244: 'initializing': conversion from 'time_t' to 'double', possible loss of data
 c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(106): warning C4244: 'initializing': conversion from 'time_t' to 'double', possible loss of data
-c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(210): warning C4018: '<': signed/unsigned mismatch
+c:\users\gamingpc\documents\github\truckandpackages\truckandpackages\truckandpackages\main.cpp(211): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   TruckAndPackages.vcxproj -> C:\Users\GamingPC\Documents\GitHub\TruckAndPackages\TruckAndPackages\Debug\TruckAndPackages.exe

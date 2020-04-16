@@ -409,10 +409,24 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 	}
 
 	//IF CHILD CAME OUT BETTER THAN EITHER PARENT
-	if (temp[2].getFitness() == child.getFitness() || temp[1].getFitness() == child.getFitness()) {
+	if (temp[2].getFitness() == child.getFitness()) {
 		this->puzzle = temp[2].puzzle;
 		partner.puzzle = temp[1].puzzle;
 
+		this->fitness = child.getFitness();
+		partner.fitness = 0;
+	}
+	else if (temp[1].getFitness() == child.getFitness()) {
+		this->puzzle = temp[2].puzzle;
+		partner.puzzle = temp[1].puzzle;
+
+		this->fitness = 0;
+		partner.fitness = child.getFitness();
+
+	}
+	else {
+		this->fitness = 0;
+		partner.fitness = 0;
 	}
 
 }
