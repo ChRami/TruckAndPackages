@@ -1,13 +1,20 @@
 #include "json/json.h"
 #include <iostream>
+#include <thread>
 #include "PuzzleIndividual.h"
 #include "PuzzlePiece.h"
+#include <algorithm>
+#include <fstream>
 
 using namespace std;
 
 class PuzzleProblem {
 
 private:
+
+	ofstream output;
+
+	int randomSeed;
 
 	int maxGenerations = 500;
 	int populationSize = 500;
@@ -31,9 +38,17 @@ private:
 
 	vector<PuzzleIndividual> pop;
 
+	//Scoring All-Time Best
+	PuzzleIndividual allTimeBest;
+	double allTimeBestScore = 0.0;
+
 public:
 
 	PuzzleProblem(vector<vector<PuzzlePiece>> newPuzzles, int frameLength, int frameWidth, int frameHeight) {
+
+		randomSeed = time(0);
+
+		srand(randomSeed);
 
 		for (int i = 0; i < newPuzzles.size(); i++) {
 			pop.push_back(PuzzleIndividual(newPuzzles[i], frameLength, frameWidth, frameHeight, initialMutationSize, MAX_MUTATION, learningRate, fillFitnessPercentage, valueFitnessPercentage, boxInFitnessPercentage));
@@ -42,6 +57,10 @@ public:
 	}
 
 	void startAlgorithm() {
+
+		string fileName = "Result_Project_" + to_string(randomSeed) + ".csv";
+
+		output.open(fileName);
 
 		for (int g = 0; g < maxGenerations; g++) {
 
@@ -80,6 +99,8 @@ public:
 			//Fitness
 			for (int i = 0; i < populationSize; i++) {
 				pop[i].setFitness(pop[i].fitnessEval());
+
+
 			}
 		
 			//Sorting
@@ -106,25 +127,95 @@ public:
 				pm -= pmChangeRate;
 			}
 
+			if (allTimeBestScore < pop[pop.size() - 1].fitness) {
+				allTimeBest = pop[pop.size() - 1];
+				allTimeBestScore = pop[pop.size() - 1].fitness;
+			}
+
 			//Print Status Info
 			cout << "Fitness Leader (Fill%): " << pop[pop.size() - 1].fitness << endl;
 			cout << "Pieces: " << pop[pop.size() - 1].toString() << endl;
 			cout << "Mutation %: " << pm << endl;
 			cout << "Crossover %: " << pc << endl << endl;
 
+			output << pop[pop.size() - 1].fitness << "," << averageFitness << endl;
+
 		}
+
+		output << "ALL TIME BEST" << endl;
+		output << allTimeBestScore << "," << allTimeBest.toString();
+
+		output.close();
 
 	}
 
+	static PuzzleProblem jsonToObj(string fileDir) {
+		ifstream ifs(fileDir);
+
+		string message = "";
+
+		for (string line; getline(ifs, line);) {
+			message += line;
+		}
+
+		//Json::Reader reader;
+		Json::Value obj;
+		//reader.parse(ifs, obj); // reader can also read strings
+
+		Json::CharReaderBuilder builder;
+		Json::CharReader *reader = builder.newCharReader();
+
+		Json::Value output;
+		string errors;
+
+		reader->parse(message.c_str(), message.c_str() + message.length(), &obj, &errors);
+
+		int pieces = 0;
+
+		int length = obj["truckLength"].asInt();
+		int width = obj["truckWidth"].asInt();
+		int height = obj["truckHeight"].asInt();
+		pieces = obj["numberOfBoxes"].asInt();
+
+		//cout << "This is position 0 and 1" << obj["boxArrangement"]["0"]["pos"][0] << " " << obj["boxArrangement"]["0"]["pos"][1] << endl;
+
+		vector<vector<PuzzlePiece>> puzzlePieces;
+
+		//PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
+		for (int i = 0; i < pieces; i++) {
+
+			vector<PuzzlePiece> puzzlePieceList;
+
+			for (int k = 0; k < obj["boxArrangement"].size(); k++) {
+				puzzlePieceList.push_back(PuzzlePiece(obj["boxArrangement"][to_string(k)]["pos"][0].asInt(), obj["boxArrangement"][to_string(k)]["pos"][1].asInt(), obj["boxArrangement"][to_string(k)]["pos"][2].asInt(), obj["boxArrangement"][to_string(k)]["dim"][0].asInt(), obj["boxArrangement"][to_string(k)]["dim"][1].asInt(), obj["boxArrangement"][to_string(k)]["dim"][2].asInt(), obj["boxArrangement"][to_string(k)]["value"].asInt()));
+			}
+
+			/*for (const Json::Value& value : obj["boxArrangement"][to_string(i)]) {
+				puzzlePieceList.push_back(PuzzlePiece(value["pos"][0].asInt(), value["pos"][1].asInt(), value["pos"][2].asInt(), value["dim"][0].asInt(), value["dim"][1].asInt(), value["dim"][2].asInt(), value["value"].asInt()));
+			}*/
+
+			puzzlePieces.push_back(puzzlePieceList);
+		}
+
+		ifs.close();
+
+		//PuzzleProblem(vector<vector<PuzzlePiece>> newPuzzles, int frameLength, int frameWidth, int frameHeight)
+
+		return PuzzleProblem(puzzlePieces,length,width,height);
+
+	}
+
+
 };
+
 
 int main() {
 	
 	//Call to Json Here to create PuzzleIndividual Object
-	PuzzleProblem a;
+	PuzzleProblem puzzleProblem = PuzzleProblem::jsonToObj("./TruckandPackages.json");
 
 	//Start Algorithm
-	a.startAlgorithm();
+	puzzleProblem.startAlgorithm();
 
 	cout << "Hello World" << endl;
 	

@@ -172,19 +172,21 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 		if (mutation < mutationRate) { //Decide whether you will mutate the piece of not
 
-			int choice = rand() % 4; //4 mutations possible
+			int choice = rand() % 3; //4 mutations possible
 
-			//1. Move with respect to X
-			//2. Move with respect to Y
-			//3. Rotate
-			//4. Randomize location
+			//1. Move with respect to X, Y or Z
+			//4. Rotate
+			//5. Randomize location
 
 			int change = 0;
 			int changeCounter = 0;
 
 			switch (choice) {
 			case 0:
-			case 1:
+			{
+
+				int choice = rand() % 3;
+
 				//Changing X or Y by an amount
 
 				//Selecting magnetude of mutation size
@@ -219,7 +221,7 @@ void PuzzleIndividual::mutate(double mutationRate) {
 
 					this->puzzle[i].moveX(change);
 				}
-				else {
+				else if (choice == 1) {
 					while (puzzle[i].getY() + change > frameWidth || puzzle[i].getY() + change < 0) {
 						change = round(change / 2);
 						changeCounter++;
@@ -232,17 +234,39 @@ void PuzzleIndividual::mutate(double mutationRate) {
 					this->puzzle[i].moveY(change);
 				}
 
-				break;
+				else {
+					while (puzzle[i].getZ() + change > frameWidth || puzzle[i].getZ() + change < 0) {
+						change = round(change / 2);
+						changeCounter++;
 
-			case 2:
+						if (changeCounter > 5) {
+							change = 0;
+							break;
+						}
+
+					}
+
+					this->puzzle[i].moveZ(change);
+				}
+
+				break;
+			}
+
+			case 1:
+			{
 				//Rotating the piece
-				this->puzzle[i].rotatePiece();
+				int choice = rand() % 3;
+				this->puzzle[i].rotatePiece(choice);
 				break;
-			case 3:
+			}
+			case 2:
+			{
 				//Randomly resetting the piece's location
-				this->puzzle[i].setX(rand() % frameWidth);
-				this->puzzle[i].setY(rand() % frameHeight);
+				this->puzzle[i].setX(rand() % frameLength);
+				this->puzzle[i].setY(rand() % frameWidth);
+				this->puzzle[i].setZ(rand() % frameHeight);
 				break;
+			}
 			}
 
 		}
@@ -262,14 +286,19 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 
 		if (crossover < crossoverRate) {
 
-			int choice = rand() % 3;//3 crossover possible
+			int choice = rand() % 7;
 
 			//1. Only crossover x
 			//2. Only crossover y
-			//3. crossover x and y
+			//3. Only crossover z
+			//4. crossover x and y
+			//5. crossover y and z
+			//6. crossover x and z
+			//7. crossover x, y and z
 
 			int newY = 0;
 			int newX = 0;
+			int newZ = 0;
 
 			switch (choice) {
 			case 0:
@@ -287,12 +316,44 @@ void PuzzleIndividual::crossover(PuzzleIndividual & partner, double crossoverRat
 
 				break;
 			case 2:
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setZ(newZ);
+
+				break;
+			case 3:
 
 				newX = round((this->getPuzzle()[i].getX() + partner.getPuzzle()[i].getX()) / 2);
 				newY = round((this->getPuzzle()[i].getY() + partner.getPuzzle()[i].getY()) / 2);
 
 				child.puzzle[i].setX(newX);
 				child.puzzle[i].setY(newY);
+
+				break;
+			case 4:
+				newY = round((this->getPuzzle()[i].getY() + partner.getPuzzle()[i].getY()) / 2);
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setY(newY);
+				child.puzzle[i].setZ(newZ);
+
+				break;
+			case 5:
+				newX = round((this->getPuzzle()[i].getX() + partner.getPuzzle()[i].getX()) / 2);
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setX(newX);
+				child.puzzle[i].setZ(newZ);
+
+				break;
+			case 6:
+				newX = round((this->getPuzzle()[i].getX() + partner.getPuzzle()[i].getX()) / 2);
+				newY = round((this->getPuzzle()[i].getY() + partner.getPuzzle()[i].getY()) / 2);
+				newZ = round((this->getPuzzle()[i].getZ() + partner.getPuzzle()[i].getZ()) / 2);
+
+				child.puzzle[i].setX(newX);
+				child.puzzle[i].setY(newY);
+				child.puzzle[i].setZ(newZ);
 
 				break;
 			}
