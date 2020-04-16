@@ -67,7 +67,7 @@ public:
 			cout << "Generation " << g << endl;
 
 			//Mutation
-			for (int i = 0; i < populationSize - survivalThreashold; i++) {
+			for (int i = 0; i < (populationSize - survivalThreashold); i++) {
 				pop[i].mutate(pm);
 			}
 			
@@ -78,7 +78,7 @@ public:
 				availableCrossoverItems.push_back(i);
 			}
 
-			for (int i = 0; i < populationSize / 2; i++) {
+			for (int i = 0; i < (populationSize / 2); i++) {
 
 				int firstIndex = availableCrossoverItems.size() - 1;
 				int first = availableCrossoverItems[firstIndex];
@@ -212,7 +212,7 @@ public:
 int main() {
 	
 	//Call to Json Here to create PuzzleIndividual Object
-	PuzzleProblem puzzleProblem = PuzzleProblem::jsonToObj("./TruckandPackages.json");
+	PuzzleProblem puzzleProblem = PuzzleProblem::jsonToObj("./Population2.json");
 
 	//Start Algorithm
 	puzzleProblem.startAlgorithm();
