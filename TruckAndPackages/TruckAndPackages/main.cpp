@@ -186,9 +186,13 @@ public:
 
 			vector<PuzzlePiece> puzzlePieceList;
 
-			for (const Json::Value& value : obj["boxArrangement"][to_string(i)]) {
-				puzzlePieceList.push_back(PuzzlePiece(value["pos"][0].asInt(), value["pos"][1].asInt(), value["pos"][2].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["dim"][0].asInt(), value["value"].asInt()));
+			for (int k = 0; k < obj["boxArrangement"].size(); k++) {
+				puzzlePieceList.push_back(PuzzlePiece(obj["boxArrangement"][to_string(k)]["pos"][0].asInt(), obj["boxArrangement"][to_string(k)]["pos"][1].asInt(), obj["boxArrangement"][to_string(k)]["pos"][2].asInt(), obj["boxArrangement"][to_string(k)]["dim"][0].asInt(), obj["boxArrangement"][to_string(k)]["dim"][1].asInt(), obj["boxArrangement"][to_string(k)]["dim"][2].asInt(), obj["boxArrangement"][to_string(k)]["value"].asInt()));
 			}
+
+			/*for (const Json::Value& value : obj["boxArrangement"][to_string(i)]) {
+				puzzlePieceList.push_back(PuzzlePiece(value["pos"][0].asInt(), value["pos"][1].asInt(), value["pos"][2].asInt(), value["dim"][0].asInt(), value["dim"][1].asInt(), value["dim"][2].asInt(), value["value"].asInt()));
+			}*/
 
 			puzzlePieces.push_back(puzzlePieceList);
 		}
