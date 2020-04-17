@@ -23,9 +23,9 @@ private:
 
 	int survivalThreashold = 5;
 
-	double fillFitnessPercentage = 0.6;
-	double valueFitnessPercentage = 0.3;
-	double boxInFitnessPercentage = 0.1;
+	double fillFitnessPercentage = 0.85;
+	double valueFitnessPercentage = 0.10;
+	double boxInFitnessPercentage = 0.05;
 
 	int initialMutationSize = 50;
 	int MAX_MUTATION = 200;
@@ -113,9 +113,18 @@ public:
 
 			//Fitness
 			for (int i = 0; i < populationSize; i++) {
+
+				cout << "Fitness count: " << i << endl;
+
+				double initTime = time(0);
+
 				if (pop[i].getFitness() == 0) {
 					pop[i].setFitness(pop[i].fitnessEval());
 				}
+
+				double endTime = time(0);
+
+				cout << "Took: " << endTime - initTime << endl;
 
 			}
 		
@@ -145,6 +154,14 @@ public:
 			}
 			else {
 				pm -= pmChangeRate;
+			}
+
+			if (pm > 1) {
+				pm = 1.0;
+			}
+
+			if (pm < 0) {
+				pm = 0.0;
 			}
 
 			if (allTimeBestScore < pop[pop.size() - 1].fitness) {
@@ -209,7 +226,7 @@ public:
 			vector<PuzzlePiece> puzzlePieceList;
 
 			for (int k = 0; k < obj["boxArrangement"].size(); k++) {
-				puzzlePieceList.push_back(PuzzlePiece(obj["boxArrangement"][to_string(k)]["pos"][0].asInt(), obj["boxArrangement"][to_string(k)]["pos"][1].asInt(), obj["boxArrangement"][to_string(k)]["pos"][2].asInt(), obj["boxArrangement"][to_string(k)]["dim"][0].asInt(), obj["boxArrangement"][to_string(k)]["dim"][1].asInt(), obj["boxArrangement"][to_string(k)]["dim"][2].asInt(), obj["boxArrangement"][to_string(k)]["value"].asInt()));
+				puzzlePieceList.push_back(PuzzlePiece(length, width, height, obj["boxArrangement"][to_string(k)]["dim"][0].asInt(), obj["boxArrangement"][to_string(k)]["dim"][1].asInt(), obj["boxArrangement"][to_string(k)]["dim"][2].asInt(), obj["boxArrangement"][to_string(k)]["value"].asInt()));
 			}
 
 			/*for (const Json::Value& value : obj["boxArrangement"][to_string(i)]) {

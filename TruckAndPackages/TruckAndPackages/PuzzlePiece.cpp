@@ -3,13 +3,13 @@
 PuzzlePiece::PuzzlePiece() {
 }
 
-PuzzlePiece::PuzzlePiece(int x, int y, int z, int length, int width, int height, int value) {
+PuzzlePiece::PuzzlePiece(int maxX, int maxY, int maxZ, int length, int width, int height, int value) {
 	this->length = length;
 	this->height = height;
 	this->width = width;
-	this->x = x;
-	this->y = y;
-	this->z = z;
+	this->x = rand() % maxX;
+	this->y = rand() % maxY;
+	this->z = rand() % maxZ;
 	this->value = value;
 }
 

@@ -54,11 +54,18 @@ double PuzzleIndividual::fitnessEval() {
 	int minZ = 1000;
 
 	int availableValue = 0;
-	int availableBoxes = puzzle.size();
+	int maxValue = 0;
+	int availableBoxes = 0;
 
 	for (int p = 0; p < puzzle.size(); p++) { //Trimming the summing tripple for loop
 
-		availableValue += puzzle[p].getValue();
+		maxValue += puzzle[p].getValue();
+
+		if (puzzle[p].getX() + puzzle[p].getLength() < frameLength && puzzle[p].getY() + puzzle[p].getWidth() < frameWidth && puzzle[p].getZ() + puzzle[p].getHeight() < frameHeight) {
+			availableValue += puzzle[p].getValue();
+			availableBoxes++;
+		}
+		
 
 		if (maxX != frameLength) {
 			if (maxX <= puzzle[p].getX() && puzzle[p].getX() < frameLength) {
@@ -73,8 +80,8 @@ double PuzzleIndividual::fitnessEval() {
 			if (maxY <= puzzle[p].getY() && puzzle[p].getY() < frameWidth) {
 				maxY = puzzle[p].getY();
 			}
-			else if (puzzle[p].getY() >= frameLength) {
-				maxY = frameLength;
+			else if (puzzle[p].getY() >= frameWidth) {
+				maxY = frameWidth;
 			}
 		}
 
@@ -116,62 +123,81 @@ double PuzzleIndividual::fitnessEval() {
 
 	}
 
-	int maxValue = availableValue;
+	vector<thread> threads;
 
 	for (int p = 0; p < puzzle.size(); p++) {
 
-		bool isInside = true;
+		PuzzlePiece currentPuzzle = puzzle[p];
 
-		for (int i = puzzle[p].getX(); i < puzzle[p].getX() + puzzle[p].getLength(); i++) {
-			for (int j = puzzle[p].getY(); j < puzzle[p].getY() + puzzle[p].getWidth(); j++) {
-				for (int k = puzzle[p].getZ(); k < puzzle[p].getZ() + puzzle[p].getWidth(); k++) {
+		int split = puzzle[p].getLength()/numberOfThreads;
 
-					if (i < frameLength && j < frameWidth && k < frameHeight) {
+		int frameLength = this->frameLength;
+		int frameWidth = this->frameWidth;
+		int frameHeight = this->frameHeight;
+		int numberOfThreads = this->numberOfThreads;
 
-						puzzleFrame[i][j][k] = 1;
+		for (int t = 0; t < numberOfThreads; t++) {
+			threads.push_back(thread([t, p, currentPuzzle, frameLength, frameWidth, frameHeight, numberOfThreads, split, &puzzleFrame]() {
 
-					} else{
+				int minX = currentPuzzle.getX() + (split*t);
+				int maxX;
 
-						if (isInside) {
-							availableBoxes--;
-							availableValue -= puzzle[p].getValue();
-							isInside = false;
-						}
-						
-						continue;
-					}
-
+				if (t != numberOfThreads - 1) {
+					maxX = currentPuzzle.getX() + (split*(t + 1));
 				}
-			}
+				else {
+					maxX = currentPuzzle.getX() + currentPuzzle.getLength();
+				}
+
+				for (int i = minX; i < maxX; i++) {
+					for (int j = currentPuzzle.getY(); j < currentPuzzle.getY() + currentPuzzle.getWidth(); j++) {
+						for (int k = currentPuzzle.getZ(); k < currentPuzzle.getZ() + currentPuzzle.getWidth(); k++) {
+
+							if (i < frameLength && j < frameWidth && k < frameHeight) {
+								puzzleFrame[i][j][k] = 1;
+							}
+							else {
+								continue;
+							}
+
+						}
+					}
+				}
+
+			}));
+		}	
+
+		for (int i = 0; i < numberOfThreads; i++) {
+			threads[i].join();
 		}
+
+		threads.clear();
 
 	}
 
 	int occupiedSpace = 0;
 
 	vector<int> counts = vector<int>(numberOfThreads, 0);
-	vector<thread> threads;
 
 	int split = (maxX - minX)/numberOfThreads;
 
 	for (int t = 0; t < numberOfThreads; t++) {
 		threads.push_back(thread([t, minX, maxX, minY, maxY, minZ, maxZ, split, puzzleFrame, &counts]() {
 
+			int threadMin = minX + (split*t);
+			int threadMax;
+
 			if (t != counts.size() - 1) {
-				for (int i = minX + (split*t); i < minX + (split*(t + 1)); i++) {
-					for (int j = minY; j < maxY; j++) {
-						for (int k = minZ; k < maxZ; k++) {
-							counts[t] += puzzleFrame[i][j][k];
-						}
-					}
-				}
+				threadMax = minX + (split*(t + 1));
 			}
 			else {
-				for (int i = minX + (split*t); i < maxX; i++) {
-					for (int j = minY; j < maxY; j++) {
-						for (int k = minZ; k < maxZ; k++) {
-							counts[t] += puzzleFrame[i][j][k];
-						}
+				threadMax = maxX;
+			}
+
+			for (int i = threadMin; i < threadMax; i++) {
+				for (int j = minY; j < maxY; j++) {
+					for (int k = minZ; k < maxZ; k++) {
+						counts[t] += puzzleFrame[i][j][k];
 					}
 				}
 			}
@@ -188,7 +214,7 @@ double PuzzleIndividual::fitnessEval() {
 	}
 
 	double occupiedPercent = ((double)occupiedSpace / (double)(frameWidth*frameHeight*frameLength)) * 100.0;
-	double valuePercent = ((double)availableValue / (double) maxValue) * 100.0;
+	double valuePercent = ((double)availableValue / (double)maxValue) * 100.0;
 	double boxPercent = ((double)availableBoxes / (double) puzzle.size()) * 100.0;
 
 

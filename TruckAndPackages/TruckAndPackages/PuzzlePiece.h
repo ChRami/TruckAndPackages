@@ -17,7 +17,7 @@ private:
 public:
 
 	PuzzlePiece();
-	PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
+	PuzzlePiece(int maxX, int maxY, int maxZ, int length, int width, int height, int value);
 
 	int getLength() const;
 	int getWidth() const;
