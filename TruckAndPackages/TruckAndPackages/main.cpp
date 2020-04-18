@@ -19,7 +19,7 @@ private:
 	static const int NumberOfThreadsUsed = 8;
 
 	static const int maxGenerations = 100;
-	static const int populationSize = 50;
+	static const int populationSize = 200;
 
 	int survivalThreashold = 5;
 
@@ -221,7 +221,7 @@ public:
 		vector<vector<PuzzlePiece>> puzzlePieces;
 
 		//PuzzlePiece(int x, int y, int z, int length, int width, int height, int value);
-		for (int i = 0; i < maxGenerations; i++) {
+		for (int i = 0; i < populationSize; i++) {
 
 			vector<PuzzlePiece> puzzlePieceList;
 
